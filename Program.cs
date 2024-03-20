@@ -1,11 +1,9 @@
-﻿using System;
-using RPGWithXML;
 
-namespace RPGWithXML
+﻿namespace RPGWithXML
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             string path = "";
             using StreamReader sr = new StreamReader(path);
@@ -42,4 +40,3 @@ namespace RPGWithXML
         }
     }
 }
-

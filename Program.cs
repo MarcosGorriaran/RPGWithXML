@@ -1,12 +1,9 @@
-﻿using System;
-using RPGWithXML;
 
-namespace RPGWithXML
-
+﻿namespace RPGWithXML
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             string path = "";
             using StreamReader sr = new StreamReader(path);
@@ -15,14 +12,31 @@ namespace RPGWithXML
             while ((xml = sr.ReadLine()) != null)
             {
                 Character character = xml.Deserialize<Character>();
-                Console.WriteLine,($"Name: {character.Name}");
-                Console.WriteLine($"Level: {character.Level}");
-                Console.WriteLine($"Attack: {character.Attack}");
-                Console.WriteLine($"Defense: {character.Defense}");
-                allCharecters.Add(xml);
+                Console.WriteLine(character.ToString());
+                Console.WriteLine("Para cambiar estas caracteristicas pulsa 1, para seguir pulsa cualquier otra tecla");
+                if (Console.ReadLine() == "1")
+                {
+                    Console.WriteLine("Introduce el nuevo nombre");
+                    character.Name = Console.ReadLine();
+                    Console.WriteLine("Introduce el nuevo nivel");
+                    character.Level = Convert.ToUInt32(Console.ReadLine());
+                    Console.WriteLine("Introduce el nuevo ataque");
+                    character.Attack = Convert.ToUInt32(Console.ReadLine());
+                    Console.WriteLine("Introduce la nueva defensa");
+                    character.Defense = Convert.ToUInt32(Console.ReadLine());
+                    Console.WriteLine("Introduce la nueva vida");
+                    character.MaxHP = Convert.ToUInt32(Console.ReadLine());
+                }
+                allCharacters.Add(character);
                 
+            }
+            using StreamWriter sw = new StreamWriter(path)
+            {
+                foreach (Character character in allCharacters)
+                {
+                    sw.WriteLine(character.Serialize());
+                }
             }
         }
     }
 }
-

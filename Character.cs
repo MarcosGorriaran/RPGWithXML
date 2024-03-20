@@ -10,8 +10,8 @@
         public uint Attack { get; set; }
         public uint Defense { get; set; }
 
-        public Character(string name,uint hp,uint maxHP ,uint level,uint attack, uint defense)
-        {
+
+        public Character(string name,uint hp,uint maxHP ,uint level,uint attack, uint defense)        {
             this.Name = name;
             this.Level = level;
             this.Attack = attack;
@@ -29,6 +29,7 @@
             returnVal += $"Attack: {this.Attack}{Environment.NewLine}";
             returnVal += $"Defense: {this.Defense}{Environment.NewLine}";
             returnVal += $"Level: {this.Level}{Environment.NewLine}";
+            returnVal += $"MaxHP: {this.MaxHP}{Environment.NewLine}";
             return returnVal;
         }
     }

@@ -19,5 +19,13 @@
         {
         
         }
+        public override string ToString()
+        {
+            string returnVal = $"Name: {this.Name}{Environment.NewLine}";
+            returnVal += $"Attack: {this.Attack}{Environment.NewLine}";
+            returnVal += $"Defense: {this.Defense}{Environment.NewLine}";
+            returnVal += $"Level: {this.Level}{Environment.NewLine}";
+            return returnVal;
+        }
     }
 }

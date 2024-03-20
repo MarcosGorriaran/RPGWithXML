@@ -2,7 +2,6 @@
 using RPGWithXML;
 
 namespace RPGWithXML
-
 {
     class Program
     {

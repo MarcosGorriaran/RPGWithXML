@@ -33,6 +33,13 @@ namespace RPGWithXML
                 allCharacters.Add(character);
                 
             }
+            using StreamWriter sw = new StreamWriter(path)
+            {
+                foreach (Character character in allCharacters)
+                {
+                    sw.WriteLine(character.Serialize());
+                }
+            }
         }
     }
 }

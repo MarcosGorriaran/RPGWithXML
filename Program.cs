@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Xml.Linq;
 using RPGWithXML;
 
@@ -7,7 +7,7 @@ namespace RPGWithXML
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             string path = "";
             XDocument doc = XDocument.Load(path);
@@ -44,4 +44,3 @@ namespace RPGWithXML
         }
     }
 }
-

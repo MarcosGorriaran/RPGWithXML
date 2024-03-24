@@ -29,7 +29,21 @@
 
         public Character() : this (DefaultName, DefaultHealth, DefaultAttack, DefaultDefense)
         { }
-
+        public bool IsCharAlive()
+        {
+            return this.Health > 0;
+        }
+        public static bool AreCharsAlive(params Character[] chars)
+        {
+            foreach(Character chara in chars)
+            {
+                if (!chara.IsCharAlive())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public override string ToString()
         {
             string returnVal = $"Name: {this.Name}{Environment.NewLine}";

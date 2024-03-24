@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using RPGWithXML;
 
 
@@ -27,99 +28,136 @@ namespace RPGWithXML
             const string AskHealth = "Enter the health: ";
             const string AskAttack = "Enter the attack: ";
             const string AskDefense = "Enter the defense: ";
+            const string MsgAttack = "{0} attacks {1}";
+            const string MsgHealth = "{0} has {1} health left";
+            const string Lines = "-----------------------------------------------------";
+            const string XMLDocCreated = "XML document has been succesfully created.";
+            const string XMLCharCreated = "New character has been added to the XML document.";
+            const string XMLDocUpdated = "XML document has been succesfully created.";
+            const string MsgWinner = " wins!";
+            const string MsgInvalidOption = "Invalid option";
+            const string FilePath = "../../../character.xml";
+            const int CreateOption = 1;
+            const int AddOption = 2;
+            const int ReadOption = 3;
+            const int UpdateOption = 4;
+            const int CombatOption = 5;
+            const int ExitOption = 6;
 
-            string filePath = "../../../character.xml";
             string name, specificName, fighterNameOne, fighterNameTwo;
             uint level, attack, defense;
             int health, input;
 
-            Console.WriteLine(Menu);
-            input = Convert.ToInt32(Console.ReadLine());
-
-            switch (input)
+            
+            
+            
+            do
             {
-                case 1: //CREAR UN NUEVO PERSONAJE
-                    Console.WriteLine(MsgCreateCharacter);
 
-                    Console.Write(AskName);
-                    name = Console.ReadLine();
-                    Console.Write(AskLevel);
-                    level = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskHealth);
-                    health = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskAttack);
-                    attack = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskDefense);
-                    defense = Convert.ToUInt16(Console.ReadLine());
 
-                    XMLHelper.CreateXMLFile(filePath, name, level, health, attack, defense);
+                Console.WriteLine(Menu);
+                input = Convert.ToInt32(Console.ReadLine());
 
-                    break;
-                case 2: //AÑADIR UN NUEVO PERSONAJE AL ARCHIVO XML
-                    Console.WriteLine(MsgAddCharacter);
+                switch (input)
+                {
+                    case CreateOption: //CREAR UN NUEVO PERSONAJE
+                        Console.WriteLine(MsgCreateCharacter);
 
-                    Console.Write(AskName);
-                    name = Console.ReadLine();
-                    Console.Write(AskLevel);
-                    level = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskHealth);
-                    health = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskAttack);
-                    attack = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskDefense);
-                    defense = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskName);
+                        name = Console.ReadLine();
+                        Console.Write(AskLevel);
+                        level = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskHealth);
+                        health = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskAttack);
+                        attack = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskDefense);
+                        defense = Convert.ToUInt16(Console.ReadLine());
 
-                    XMLHelper.AddCharacterToXMLFile(filePath, name, level, health, attack, defense);
+                        XMLHelper.CreateXMLFile(FilePath, name, level, health, attack, defense);
+                        Console.WriteLine(XMLDocCreated);
+                        break;
+                    case AddOption: //AÑADIR UN NUEVO PERSONAJE AL ARCHIVO XML
+                        Console.WriteLine(MsgAddCharacter);
 
-                    break;
-                case 3: //LEER EL PERSONAJE DESDE EL ARCHIVO XML
-                    Console.WriteLine(MsgReadCharacter);
+                        Console.Write(AskName);
+                        name = Console.ReadLine();
+                        Console.Write(AskLevel);
+                        level = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskHealth);
+                        health = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskAttack);
+                        attack = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskDefense);
+                        defense = Convert.ToUInt16(Console.ReadLine());
 
-                    List<Character> characters = XMLHelper.ReadXMLFile(filePath);
-                    XMLHelper.PrintResult(characters);
+                        XMLHelper.AddCharacterToXMLFile(FilePath, name, level, health, attack, defense);
+                        Console.WriteLine(XMLCharCreated);
+                        break;
+                    case ReadOption: //LEER EL PERSONAJE DESDE EL ARCHIVO XML
+                        Console.WriteLine(MsgReadCharacter);
 
-                    break;
-                case 4: //ACTUALIZAR EL PERSONAJE EN EL ARCHIVO XML
-                    Console.WriteLine(MsgUpdateCharacter);
+                        List<Character> characters = XMLHelper.ReadXMLFile(FilePath);
+                        Console.Write(XMLHelper.PrintResult(characters));
 
-                    Console.Write(AskSpecificName);
-                    specificName = Console.ReadLine();
+                        break;
+                    case UpdateOption: //ACTUALIZAR EL PERSONAJE EN EL ARCHIVO XML
+                        Console.WriteLine(MsgUpdateCharacter);
 
-                    Console.WriteLine(AskName);
-                    name = Console.ReadLine();
-                    Console.Write(AskLevel);
-                    level = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskHealth);
-                    health = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskAttack);
-                    attack = Convert.ToUInt16(Console.ReadLine());
-                    Console.Write(AskDefense);
-                    defense = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskSpecificName);
+                        specificName = Console.ReadLine();
 
-                    XMLHelper.UpdateXMLFile(filePath, specificName, name, level, health, attack, defense);
+                        Console.WriteLine(AskName);
+                        name = Console.ReadLine();
+                        Console.Write(AskLevel);
+                        level = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskHealth);
+                        health = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskAttack);
+                        attack = Convert.ToUInt16(Console.ReadLine());
+                        Console.Write(AskDefense);
+                        defense = Convert.ToUInt16(Console.ReadLine());
 
-                    break;
-                case 5: //COMBATE ENTRE DOS PERSONAJES
-                    Console.WriteLine(AskFighterName);
+                        XMLHelper.UpdateXMLFile(FilePath, specificName, name, level, health, attack, defense);
+                        Console.WriteLine(XMLDocUpdated);
+                        break;
+                    case CombatOption: //COMBATE ENTRE DOS PERSONAJES
+                        Console.WriteLine(AskFighterName);
 
-                    Console.WriteLine(AskName);
-                    fighterNameOne = Console.ReadLine();
-                    Character playerOne = XMLHelper.SelectCharacter(filePath, fighterNameOne);
+                        Console.WriteLine(AskName);
+                        fighterNameOne = Console.ReadLine();
+                        Character playerOne = XMLHelper.SelectCharacter(FilePath, fighterNameOne);
 
-                    Console.WriteLine(AskName);
-                    fighterNameTwo = Console.ReadLine();
-                    Character playerTwo = XMLHelper.SelectCharacter(filePath, fighterNameTwo);
+                        Console.WriteLine(AskName);
+                        fighterNameTwo = Console.ReadLine();
+                        Character playerTwo = XMLHelper.SelectCharacter(FilePath, fighterNameTwo);
 
-                    Combat.Fight(playerOne, playerTwo);
+                        //simula una batalla hasta que la vida de uno queda 0
+                        while (Character.AreCharsAlive(playerOne, playerTwo))
+                        {
+                            Console.WriteLine(MsgAttack, playerOne.Name, playerTwo.Name);
+                            playerTwo.Health -= Convert.ToInt32(playerOne.Attack - playerTwo.Defense);
+                            Console.WriteLine(MsgHealth, playerTwo.Name, playerTwo.Health);
 
-                    break;
-                case 6:
-                    Console.WriteLine(MsgExit);
-                    break;
-                default:
-                    Console.WriteLine("Invalid option");
-                    break;
-            }
+                            Console.WriteLine(MsgAttack, playerTwo.Name, playerOne.Name);
+                            playerOne.Health -= Convert.ToInt32(playerTwo.Attack - playerTwo.Defense);
+                            Console.WriteLine(MsgHealth, playerOne.Name, playerOne.Health);
+
+                            Console.WriteLine(Lines);
+                        }
+
+                        //Muestra el ganador
+                        Console.WriteLine(playerOne.IsCharAlive() ? (playerOne.Name + MsgWinner) : (playerTwo.Name + MsgWinner));
+
+                        break;
+                    case ExitOption:
+                        Console.WriteLine(MsgExit);
+                        break;
+                    default:
+                        Console.WriteLine(MsgInvalidOption);
+                        break;
+                }
+            } while (input != ExitOption);
         }
     }
 }

@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace RPGWithXML
 {
     public class XMLHelper
     {
+        const string CharacterClassName = "character";
+        const string CharactersName = "characters";
+        const string CharName = "name";
+        const string CharLevel = "level";
+        const string CharHP = "health";
+        const string CharAttack = "attack";
+        const string Defense = "defense";
+
         //USING LINQ TO XML: CREATE XML FILE
         public static void CreateXMLFile(string filePath, string name, uint level, int health, uint attack, uint defense)
         {
             XDocument xmlDoc = new XDocument(
-                new XElement("characters",
-                    new XElement("character",
-                        new XElement("name", name),
-                        new XElement("level", level),
-                        new XElement("health", health),
-                        new XElement("attack", attack),
-                        new XElement("defense", defense)
+                new XElement(CharactersName,
+                    new XElement(CharacterClassName,
+                        new XElement(CharName, name),
+                        new XElement(CharLevel, level),
+                        new XElement(CharHP, health),
+                        new XElement(CharAttack, attack),
+                        new XElement(Defense, defense)
                     )
                 )
             );
@@ -29,7 +30,7 @@ namespace RPGWithXML
             //filePath => "direccion path";
             xmlDoc.Save(filePath);
 
-            Console.WriteLine("Documento XML creado correctamente.");
+            
         }
 
         //USING LINQ TO XML: ADD NEW CHARACTER TO XML FILE
@@ -37,19 +38,19 @@ namespace RPGWithXML
         {
             XDocument xmlDoc = XDocument.Load(filePath);
 
-            XElement newCharacter = new XElement("character",
-                                            new XElement("name", name),
-                                            new XElement("level", level),
-                                            new XElement("health", health),
-                                            new XElement("attack", attack),
-                                            new XElement("defense", defense)
+            XElement newCharacter = new XElement(CharacterClassName,
+                                            new XElement(CharName, name),
+                                            new XElement(CharLevel, level),
+                                            new XElement(CharHP, health),
+                                            new XElement(CharAttack, attack),
+                                            new XElement(Defense, defense)
                                         );
 
             xmlDoc.Root.Add(newCharacter);
 
             xmlDoc.Save(filePath);
 
-            Console.WriteLine("Nuevo personaje añadido al documento XML correctamente.");
+            
         }
 
         //USING LINQ TO XML: READ XML FILE
@@ -58,31 +59,28 @@ namespace RPGWithXML
             XDocument xmlDoc = XDocument.Load(filePath);
 
             //Lee todos los elementos "character" dentro de "characters" y los convierte en objetos Character
-            var characters = from character in xmlDoc.Descendants("character")
+            var characters = from character in xmlDoc.Descendants(CharacterClassName)
                              select new Character
                              {
-                                 Name = character.Element("name").Value,
-                                 Level = Convert.ToUInt32(character.Element("level").Value),
-                                 Health = Convert.ToInt32(character.Element("health").Value),
-                                 Attack = Convert.ToUInt32(character.Element("attack").Value),
-                                 Defense = Convert.ToUInt32(character.Element("defense").Value)
+                                 Name = character.Element(CharName).Value,
+                                 Level = Convert.ToUInt32(character.Element(CharLevel).Value),
+                                 Health = Convert.ToInt32(character.Element(CharHP).Value),
+                                 Attack = Convert.ToUInt32(character.Element(CharAttack).Value),
+                                 Defense = Convert.ToUInt32(character.Element(Defense).Value)
                              };
 
             //"characters" es de tipo IEnumerable<T>, con .ToList() lo convertimos a List<Character>
             return characters.ToList(); 
         }
 
-        public static void PrintResult(List<Character> characters)
+        public static string PrintResult(List<Character> characters)
         {
+            string result="";
             foreach (var character in characters)
             {
-                Console.WriteLine($"Name: {character.Name}");
-                Console.WriteLine($"Level: {character.Level}");
-                Console.WriteLine($"Health: {character.Health}");
-                Console.WriteLine($"Attack: {character.Attack}");
-                Console.WriteLine($"Defense: {character.Defense}");
-                Console.WriteLine();
+                result += character + Environment.NewLine;
             }
+            return result;
         }
 
         //Lee un personaje en especifico, por el nombre (Este metodo lo usaremos para el combate)
@@ -90,15 +88,15 @@ namespace RPGWithXML
         {
             XDocument xmlDoc = XDocument.Load(filePath);
 
-            var character = (from selection in xmlDoc.Descendants("character")
-                             where selection.Element("name").Value == specificName
+            var character = (from selection in xmlDoc.Descendants(CharacterClassName)
+                             where selection.Element(CharName).Value == specificName
                              select new Character
                              {
-                                 Name = selection.Element("name").Value,
-                                 Level = Convert.ToUInt32(selection.Element("level").Value),
-                                 Health = Convert.ToInt32(selection.Element("health").Value),
-                                 Attack = Convert.ToUInt32(selection.Element("attack").Value),
-                                 Defense = Convert.ToUInt32(selection.Element("defense").Value)
+                                 Name = selection.Element(CharName).Value,
+                                 Level = Convert.ToUInt32(selection.Element(CharLevel).Value),
+                                 Health = Convert.ToInt32(selection.Element(CharHP).Value),
+                                 Attack = Convert.ToUInt32(selection.Element(CharAttack).Value),
+                                 Defense = Convert.ToUInt32(selection.Element(Defense).Value)
                              }).SingleOrDefault(); ;
 
             return character;
@@ -110,18 +108,18 @@ namespace RPGWithXML
         {
             XDocument xmlDoc = XDocument.Load(filePath);
 
-            var character = xmlDoc.Descendants("character").FirstOrDefault(
-                c => c.Element("name")?.Value == specificName);
+            var character = xmlDoc.Descendants(CharacterClassName).FirstOrDefault(
+                c => c.Element(CharName)?.Value == specificName);
 
-            character.Element("name").Value = name;
-            character.Element("level").Value = level.ToString();
-            character.Element("health").Value = health.ToString();
-            character.Element("attack").Value = attack.ToString();
-            character.Element("defense").Value = defense.ToString();
+            character.Element(CharName).Value = name;
+            character.Element(CharLevel).Value = level.ToString();
+            character.Element(CharHP).Value = health.ToString();
+            character.Element(CharAttack).Value = attack.ToString();
+            character.Element(Defense).Value = defense.ToString();
 
             xmlDoc.Save(filePath);
 
-            Console.WriteLine("Documento XML actualizado correctamente.");
+            
         }
     }
 }

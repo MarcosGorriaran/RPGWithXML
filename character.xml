@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<characters>
+  <character>
+    <name>Mario</name>
+    <level>100</level>
+    <health>100</health>
+    <attack>20</attack>
+    <defense>0</defense>
+  </character>
+  <character>
+    <name>Carlos</name>
+    <level>100</level>
+    <health>50</health>
+    <attack>5</attack>
+    <defense>0</defense>
+  </character>
+</characters>

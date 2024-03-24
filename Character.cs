@@ -31,6 +31,10 @@ namespace RPGWithXML
 
         public Character() : this (DefaultName, DefaultHealth, DefaultAttack, DefaultDefense)
         { }
+        /*
+         Este objeto de serializacion en XML tiene muchas similitudes al serializador que utilizamos
+         en acceso de datos para JSON.
+         */
         public void XMLSerialize(string path)
         {
             XmlSerializer serializer = new XmlSerializer(this.GetType());

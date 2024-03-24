@@ -1,24 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfCharacter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Character>
-    <Name>NewSomeone</Name>
-    <Level>2</Level>
-    <Health>4</Health>
-    <Attack>4</Attack>
-    <Defense>2</Defense>
-  </Character>
-  <Character>
     <Name>OtherSomeone</Name>
     <Level>5</Level>
     <Health>10</Health>
     <Attack>5</Attack>
-    <Defense>2</Defense>
-  </Character>
-  <Character>
-    <Name>BlaBla</Name>
-    <Level>3</Level>
-    <Health>5</Health>
-    <Attack>2</Attack>
     <Defense>2</Defense>
   </Character>
 </ArrayOfCharacter>

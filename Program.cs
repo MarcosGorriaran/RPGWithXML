@@ -12,14 +12,15 @@ namespace RPGWithXML
         {
             const string Menu = "\n1. ADD new character" +
                 "\n2. READ all the characters" +
-                "\n3. UPDATE the character" +
-                "\n4. COMBAT" +
-                "\n5. Exit";
+                "\n3. UPDATE a character" +
+                "\n4. DELETE a Character" +
+                "\n5. COMBAT" +
+                "\n6. Exit";
             const string MsgExit = "Exit the program";
-            const string MsgCreateCharacter = "Create a new character:";
             const string MsgAddCharacter = "Add a new character to the XML file:";
             const string MsgReadCharacter = "Read the character from the XML file:";
-            const string MsgUpdateCharacter = "Update the character:";
+            const string MsgUpdateCharacter = "Update a character:";
+            const string MsgDeleteCharacter = "Delete a character: ";
             const string AskSpecificName = "Enter the name of the character you want to update: ";
             const string AskFighterName = "Enter the name of the fighter: ";
             const string AskName = "Enter the name: ";
@@ -38,8 +39,9 @@ namespace RPGWithXML
             const int AddOption = 1;
             const int ReadOption = 2;
             const int UpdateOption = 3;
-            const int CombatOption = 4;
-            const int ExitOption = 5;
+            const int DeleteOption = 4;
+            const int CombatOption = 5;
+            const int ExitOption = 6;
 
             string name, specificName, fighterNameOne, fighterNameTwo;
             uint level, attack, defense;
@@ -85,7 +87,7 @@ namespace RPGWithXML
                         Console.Write(AskSpecificName);
                         specificName = Console.ReadLine();
 
-                        Console.WriteLine(AskName);
+                        Console.Write(AskName);
                         name = Console.ReadLine();
                         Console.Write(AskLevel);
                         level = Convert.ToUInt16(Console.ReadLine());
@@ -97,6 +99,14 @@ namespace RPGWithXML
                         defense = Convert.ToUInt16(Console.ReadLine());
 
                         XMLHelper.UpdateXMLFile(FilePath, specificName, name, level, health, attack, defense);
+                        Console.WriteLine(XMLDocUpdated);
+                        break;
+                    case DeleteOption:
+                        Console.WriteLine(MsgDeleteCharacter);
+                        Console.Write(AskName);
+                        name = Console.ReadLine();
+
+                        XMLHelper.DeleteCharacter(FilePath, character => character.Name==name);
                         Console.WriteLine(XMLDocUpdated);
                         break;
                     case CombatOption: //COMBATE ENTRE DOS PERSONAJES

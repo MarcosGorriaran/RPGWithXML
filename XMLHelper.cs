@@ -52,6 +52,22 @@ namespace RPGWithXML
             return character.First<Character>();
         }
 
+        //Javascript puede que sea un lenguaje con problemas pero fue el lenguaje que nos introduzco a los delegate o al menos su version que se les conoce como callbacks.
+        public delegate bool FindSpecificChar(Character character);
+        public static void DeleteCharacter(string filePath, FindSpecificChar findDelegate) 
+        {
+            List<Character> characters = Character.XMLDeserializeGroup(filePath);
+            List<Character> savedCharacters = new List<Character>();
+            foreach (Character character in characters)
+            {
+                if (!findDelegate(character))
+                {
+                    savedCharacters.Add(character);
+                }
+            }
+            Character.XMLSerialize(filePath, savedCharacters.ToArray());
+        }
+
         //USING LINQ TO XML: UPDATE XML FILE
         public static void UpdateXMLFile (string filePath,string specificName, string name, uint level, int health, uint attack, uint defense)
         {
